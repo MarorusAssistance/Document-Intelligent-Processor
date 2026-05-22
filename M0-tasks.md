@@ -10,9 +10,9 @@
 
 | Área | Tareas | Completadas |
 |---|---|---|
-| 1. Root / Repo setup | 6 | 0 |
-| 2. Backend: Scaffolding | 3 | 0 |
-| 3. Backend: Dominio | 7 | 0 |
+| 1. Root / Repo setup | 6 | 6 |
+| 2. Backend: Scaffolding | 3 | 3 |
+| 3. Backend: Dominio | 7 | 7 |
 | 4. Backend: Application layer | 7 | 0 |
 | 5. Backend: Infrastructure adapters | 10 | 0 |
 | 6. Backend: API layer | 19 | 0 |
@@ -22,7 +22,7 @@
 | 10. Scripts raíz | 2 | 0 |
 | 11. GitHub Actions CI/CD | 6 | 0 |
 | 12. ADRs | 9 | 0 |
-| **Total** | **99** | **0** |
+| **Total** | **99** | **16** |
 
 ---
 
@@ -50,32 +50,32 @@ Bloque E — Al final
 
 ## ÁREA 1 — Root / Repo setup
 
-- [ ] **1.1** Crear `.gitignore` (Python, Node, Bicep, .env, __pycache__, .venv, node_modules)
-- [ ] **1.2** Crear `.editorconfig`
-- [ ] **1.3** Actualizar `README.md` con instrucciones de bootstrap funcionales (pre-requisitos, `./scripts/bootstrap-local.sh`, `make dev`, endpoints)
-- [ ] **1.4** Crear `Makefile` con targets: `bootstrap`, `dev`, `test`, `lint`, `typecheck`, `openapi-export`, `infra-whatif`, `infra-deploy`, `clean`
-- [ ] **1.5** Crear `docker-compose.yml` — servicios: `azurite`, `odoo`, `odoo-db`, `cosmos-emulator` (profile `offline`)
-- [ ] **1.6** Crear `.pre-commit-config.yaml` — hooks: trailing-whitespace, end-of-file-fixer, check-yaml, check-toml, check-added-large-files, check-merge-conflict, detect-private-key, ruff, ruff-format, mypy, prettier, markdownlint, bicep format
+- [x] **1.1** Crear `.gitignore` (Python, Node, Bicep, .env, __pycache__, .venv, node_modules)
+- [x] **1.2** Crear `.editorconfig`
+- [x] **1.3** Actualizar `README.md` con instrucciones de bootstrap funcionales (pre-requisitos, `./scripts/bootstrap-local.sh`, `make dev`, endpoints)
+- [x] **1.4** Crear `Makefile` con targets: `bootstrap`, `dev`, `test`, `lint`, `typecheck`, `openapi-export`, `infra-whatif`, `infra-deploy`, `clean`
+- [x] **1.5** Crear `docker-compose.yml` — servicios: `azurite`, `odoo`, `odoo-db`, `cosmos-emulator` (profile `offline`)
+- [x] **1.6** Crear `.pre-commit-config.yaml` — hooks: trailing-whitespace, end-of-file-fixer, check-yaml, check-toml, check-added-large-files, check-merge-conflict, detect-private-key, ruff, ruff-format, mypy, prettier, markdownlint, bicep format
 
 ---
 
 ## ÁREA 2 — Backend: Scaffolding
 
-- [ ] **2.1** Crear `backend/pyproject.toml` (uv, Python 3.12; deps: fastapi, pydantic-settings, structlog, azure-cosmos, azure-storage-blob, azure-servicebus, azure-keyvault-secrets, azure-ai-documentintelligence, azure-identity, opentelemetry-sdk, python-ulid; dev: ruff, mypy, pytest, pytest-cov, httpx)
-- [ ] **2.2** Crear `backend/Dockerfile` (multi-stage, uv, src/ layout, usuario no-root)
-- [ ] **2.3** Crear `backend/.env.example` con todas las vars del spec
+- [x] **2.1** Crear `backend/pyproject.toml` (uv, Python 3.12; deps: fastapi, pydantic-settings, structlog, azure-cosmos, azure-storage-blob, azure-servicebus, azure-keyvault-secrets, azure-ai-documentintelligence, azure-identity, opentelemetry-sdk, python-ulid; dev: ruff, mypy, pytest, pytest-cov, httpx)
+- [x] **2.2** Crear `backend/Dockerfile` (multi-stage, uv, src/ layout, usuario no-root)
+- [x] **2.3** Crear `backend/.env.example` con todas las vars del spec
 
 ---
 
 ## ÁREA 3 — Backend: Dominio (`domain/`)
 
-- [ ] **3.1** `domain/documents/value_objects.py` — `Money`, `BoundingBox`, `FieldKey`
-- [ ] **3.2** `domain/documents/models.py` — `Document`, `ExtractedField`, `Correction`, `PushAttempt` (ULIDs con prefijo, timestamps UTC, enums snake_case, Money como objeto)
-- [ ] **3.3** `domain/documents/state_machine.py` — transiciones válidas (`uploaded→processing→extracted→pending_review→approved→pushing→pushed`, `pending_review↔rejected`, `*→failed`); levanta `InvalidTransition` en transición inválida
-- [ ] **3.4** `domain/documents/field_schemas/invoice.py` — enum cerrado de fieldKeys canónicos (invoice_number, vendor_name, vendor_tax_id, invoice_date, due_date, total_amount, tax_amount, line_description, line_quantity, line_unit_price, line_amount, etc.)
-- [ ] **3.5** `domain/documents/field_schemas/delivery_note.py` — placeholder con TODO (M4)
-- [ ] **3.6** `domain/jobs/models.py` — `Job` con jobKind enum, status, payload/result tipados con discriminated union, retry fields
-- [ ] **3.7** `domain/jobs/retry_policy.py` — backoff exponencial (30s, 2m, 8m, 32m, 2h → dead_letter)
+- [x] **3.1** `domain/documents/value_objects.py` — `Money`, `BoundingBox`, `FieldKey`
+- [x] **3.2** `domain/documents/models.py` — `Document`, `ExtractedField`, `Correction`, `PushAttempt` (ULIDs con prefijo, timestamps UTC, enums snake_case, Money como objeto)
+- [x] **3.3** `domain/documents/state_machine.py` — transiciones válidas (`uploaded→processing→extracted→pending_review→approved→pushing→pushed`, `pending_review↔rejected`, `*→failed`); levanta `InvalidTransition` en transición inválida
+- [x] **3.4** `domain/documents/field_schemas/invoice.py` — enum cerrado de fieldKeys canónicos (invoice_number, vendor_name, vendor_tax_id, invoice_date, due_date, total_amount, tax_amount, line_description, line_quantity, line_unit_price, line_amount, etc.)
+- [x] **3.5** `domain/documents/field_schemas/delivery_note.py` — placeholder con TODO (M4)
+- [x] **3.6** `domain/jobs/models.py` — `Job` con jobKind enum, status, payload/result tipados con discriminated union, retry fields
+- [x] **3.7** `domain/jobs/retry_policy.py` — backoff exponencial (30s, 2m, 8m, 32m, 2h → dead_letter)
 
 ---
 
