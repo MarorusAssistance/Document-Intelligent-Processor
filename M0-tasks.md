@@ -108,25 +108,25 @@ Bloque E — Al final
 
 ## ÁREA 6 — Backend: API layer
 
-- [ ] **6.1** `api/v1/dto/_base.py` — `CamelCaseModel` con `alias_generator=to_camel`
-- [ ] **6.2** `api/v1/dto/errors.py` — `ProblemDetails` RFC 7807 (type, title, status, detail, instance, traceId, code, errors[])
-- [ ] **6.3** `api/v1/dto/pagination.py` — `PaginatedResponse[T]` (items, pagination: limit, nextCursor, hasMore)
-- [ ] **6.4** `api/v1/dto/documents.py` — `DocumentResponse`, `DocumentListItem`, `CreateDocumentRequest`, `PatchDocumentStatusRequest`
-- [ ] **6.5** `api/v1/dto/corrections.py` — `CorrectionResponse`, `CreateCorrectionRequest`, `ExtractedFieldResponse`
-- [ ] **6.6** `api/v1/dto/jobs.py` — `JobResponse`, `JobListItem`
-- [ ] **6.7** `api/v1/dto/mappers.py` — `document_to_response()`, `field_to_response()`, `correction_to_response()`, `job_to_response()`
-- [ ] **6.8** `api/v1/routers/health.py` — `GET /health` (200), `GET /health/ready` (200), `GET /api/v1/version`
-- [ ] **6.9** `api/v1/routers/documents.py` — todos los endpoints de documents con mock data tipado: `POST /documents`, `GET /documents`, `GET /documents/{id}`, `PATCH /documents/{id}/status`, `DELETE /documents/{id}`
-- [ ] **6.10** `api/v1/routers/corrections.py` — `GET /documents/{id}/fields`, `GET /documents/{id}/fields/{fid}`, `POST /documents/{id}/fields/{fid}/corrections`, `GET /documents/{id}/fields/{fid}/corrections`
-- [ ] **6.11** `api/v1/routers/jobs.py` — `GET /jobs`, `GET /jobs/{id}`, `POST /jobs/{id}/retry`; placeholder `POST /documents/{id}/push-attempts`, `GET /documents/{id}/push-attempts`; placeholder `POST /webhooks/erp/{targetErp}`
-- [ ] **6.12** `api/v1/dependencies.py` — `get_current_client_id()`, inyección de repos y adapters
-- [ ] **6.13** `api/v1/exception_handlers.py` — handler global → ProblemDetails con traceId (W3C traceparent)
-- [ ] **6.14** `api/middleware/auth.py` — Bearer JWT; dev bypass solo si `AUTH_DEV_BYPASS=true` AND `ENVIRONMENT=development`
-- [ ] **6.15** `api/middleware/request_id.py` — genera/propaga `requestId` + `traceId` en contextvars
-- [ ] **6.16** `api/middleware/access_log.py` — log estructurado por request (method, path, status, latency_ms)
-- [ ] **6.17** `main.py` — FastAPI app con lifespan, registra routers, middlewares y exception handlers
-- [ ] **6.18** `config.py` — `Settings` (Pydantic BaseSettings) con todas las env vars
-- [ ] **6.19** `logging_config.py` — structlog JSON (prod) + ConsoleRenderer con colores (dev); contextvars: traceId, requestId, clientId, userId, documentId, jobId
+- [x] **6.1** `api/v1/dto/_base.py` — `CamelCaseModel` con `alias_generator=to_camel`
+- [x] **6.2** `api/v1/dto/errors.py` — `ProblemDetails` RFC 7807 (type, title, status, detail, instance, traceId, code, errors[])
+- [x] **6.3** `api/v1/dto/pagination.py` — `PaginatedResponse[T]` (items, pagination: limit, nextCursor, hasMore)
+- [x] **6.4** `api/v1/dto/documents.py` — `DocumentResponse`, `DocumentListItem`, `CreateDocumentRequest`, `PatchDocumentStatusRequest`
+- [x] **6.5** `api/v1/dto/corrections.py` — `CorrectionResponse`, `CreateCorrectionRequest`, `ExtractedFieldResponse`
+- [x] **6.6** `api/v1/dto/jobs.py` — `JobResponse`, `JobListItem`
+- [x] **6.7** `api/v1/dto/mappers.py` — `document_to_response()`, `field_to_response()`, `correction_to_response()`, `job_to_response()`
+- [x] **6.8** `api/v1/routers/health.py` — `GET /health` (200), `GET /health/ready` (200), `GET /api/v1/version`
+- [x] **6.9** `api/v1/routers/documents.py` — todos los endpoints de documents con mock data tipado: `POST /documents`, `GET /documents`, `GET /documents/{id}`, `PATCH /documents/{id}/status`, `DELETE /documents/{id}`
+- [x] **6.10** `api/v1/routers/corrections.py` — `GET /documents/{id}/fields`, `GET /documents/{id}/fields/{fid}`, `POST /documents/{id}/fields/{fid}/corrections`, `GET /documents/{id}/fields/{fid}/corrections`
+- [x] **6.11** `api/v1/routers/jobs.py` — `GET /jobs`, `GET /jobs/{id}`, `POST /jobs/{id}/retry`; placeholder `POST /documents/{id}/push-attempts`, `GET /documents/{id}/push-attempts`; placeholder `POST /webhooks/erp/{targetErp}`
+- [x] **6.12** `api/v1/dependencies.py` — `get_current_client_id()`, inyección de repos y adapters
+- [x] **6.13** `api/v1/exception_handlers.py` — handler global → ProblemDetails con traceId (W3C traceparent)
+- [x] **6.14** `api/middleware/auth.py` — Bearer JWT; dev bypass solo si `AUTH_DEV_BYPASS=true` AND `ENVIRONMENT=development`
+- [x] **6.15** `api/middleware/request_id.py` — genera/propaga `requestId` + `traceId` en contextvars
+- [x] **6.16** `api/middleware/access_log.py` — log estructurado por request (method, path, status, latency_ms)
+- [x] **6.17** `main.py` — FastAPI app con lifespan, registra routers, middlewares y exception handlers
+- [x] **6.18** `config.py` — `Settings` (Pydantic BaseSettings) con todas las env vars
+- [x] **6.19** `logging_config.py` — structlog JSON (prod) + ConsoleRenderer con colores (dev); contextvars: traceId, requestId, clientId, userId, documentId, jobId
 
 ---
 
