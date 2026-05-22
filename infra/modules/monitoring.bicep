@@ -25,6 +25,7 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
 
 output logAnalyticsWorkspaceId string = logAnalytics.properties.customerId
 // Required by Container Apps Environment for log streaming
+#disable-next-line outputs-should-not-contain-secrets
 output logAnalyticsSharedKey string = logAnalytics.listKeys().primarySharedKey
 output logAnalyticsResourceId string = logAnalytics.id
 output appInsightsId string = appInsights.id

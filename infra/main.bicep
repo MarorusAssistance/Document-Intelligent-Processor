@@ -18,20 +18,22 @@ param enableFreeTier bool = true
 
 // ── Naming ────────────────────────────────────────────────────────────────────
 
+// Compute RG name inline — module outputs are not available at deployment start (BCP120)
+var rgName = 'rg-${baseName}-${env}-${region}'
+
+resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+  name: rgName
+  location: location
+}
+
 module naming 'modules/naming.bicep' = {
   name: 'naming'
+  scope: subscription()
   params: {
     baseName: baseName
     env: env
     region: region
   }
-}
-
-// ── Resource Group ────────────────────────────────────────────────────────────
-
-resource rg 'Microsoft.Resources/resourceGroups@2023-07-01' = {
-  name: naming.outputs.resourceGroupName
-  location: location
 }
 
 // ── Monitoring (deployed first — other modules depend on outputs) ──────────────
@@ -159,5 +161,5 @@ module caApi 'modules/container-app-api.bicep' = {
     apiIdentityClientId: identity.outputs.apiIdentityClientId
     keyVaultName: naming.outputs.keyVaultName
   }
-  dependsOn: [identity, cae, keyVault]
+  dependsOn: [keyVault]
 }

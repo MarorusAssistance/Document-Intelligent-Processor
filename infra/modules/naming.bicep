@@ -1,3 +1,5 @@
+targetScope = 'subscription'
+
 @description('Base name for all resources (e.g. docproc)')
 param baseName string
 
