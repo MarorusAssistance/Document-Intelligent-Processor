@@ -15,14 +15,14 @@
 | 3. Backend: Dominio | 7 | 7 |
 | 4. Backend: Application layer | 7 | 7 |
 | 5. Backend: Infrastructure adapters | 10 | 10 |
-| 6. Backend: API layer | 19 | 0 |
-| 7. Backend: Tests | 6 | 0 |
-| 8. Frontend: Scaffolding | 9 | 0 |
-| 9. Infraestructura Bicep | 15 | 0 |
-| 10. Scripts raíz | 2 | 0 |
-| 11. GitHub Actions CI/CD | 6 | 0 |
+| 6. Backend: API layer | 19 | 19 |
+| 7. Backend: Tests | 6 | 6 |
+| 8. Frontend: Scaffolding | 9 | 9 |
+| 9. Infraestructura Bicep | 15 | 15 |
+| 10. Scripts raíz | 2 | 2 |
+| 11. GitHub Actions CI/CD | 6 | 6 |
 | 12. ADRs | 9 | 0 |
-| **Total** | **99** | **33** |
+| **Total** | **99** | **90** |
 
 ---
 
@@ -143,53 +143,53 @@ Bloque E — Al final
 
 ## ÁREA 8 — Frontend: Scaffolding
 
-- [ ] **8.1** Inicializar Next.js 15 con App Router, TypeScript strict, Tailwind (`npx create-next-app`)
-- [ ] **8.2** Inicializar shadcn/ui (`npx shadcn@latest init`)
-- [ ] **8.3** Instalar y configurar MSAL (`@azure/msal-browser`, `@azure/msal-react`) en `lib/auth.ts`
-- [ ] **8.4** Crear `lib/env.ts` — validación de env vars con zod en boot
-- [ ] **8.5** Crear `lib/api-client.ts` — cliente HTTP tipado apuntando al backend
-- [ ] **8.6** Crear route group `(auth)/` con layout protegido vacío
-- [ ] **8.7** Configurar `npm run generate-types` — `openapi-typescript` desde `docs/api/openapi.json` → `types/api.generated.ts` (gitignored)
-- [ ] **8.8** Crear `frontend/Dockerfile` (multi-stage, Node 24 LTS)
-- [ ] **8.9** Crear `frontend/.env.example` (NEXT_PUBLIC_API_URL, Azure Entra config)
+- [x] **8.1** Inicializar Next.js 15 con App Router, TypeScript strict, Tailwind (`npx create-next-app`)
+- [x] **8.2** Inicializar shadcn/ui (`npx shadcn@latest init`)
+- [x] **8.3** Instalar y configurar MSAL (`@azure/msal-browser`, `@azure/msal-react`) en `lib/auth.ts`
+- [x] **8.4** Crear `lib/env.ts` — validación de env vars con zod en boot
+- [x] **8.5** Crear `lib/api-client.ts` — cliente HTTP tipado apuntando al backend
+- [x] **8.6** Crear route group `(auth)/` con layout protegido vacío
+- [x] **8.7** Configurar `npm run generate-types` — `openapi-typescript` desde `docs/api/openapi.json` → `types/api.generated.ts` (gitignored)
+- [x] **8.8** Crear `frontend/Dockerfile` (multi-stage, Node 24 LTS)
+- [x] **8.9** Crear `frontend/.env.example` (NEXT_PUBLIC_API_URL, Azure Entra config)
 
 ---
 
 ## ÁREA 9 — Infraestructura Bicep
 
-- [ ] **9.1** `infra/main.bicep` — targetScope=subscription, crea RG inline, orquesta módulos
-- [ ] **9.2** `infra/parameters/dev.bicepparam` — valores dev (westeurope, enableFreeTier=true, básico para que `prod.bicepparam` solo cambie valores)
-- [ ] **9.3** `infra/modules/naming.bicep` — outputs de todos los nombres según convención CAF (`{abbr}-{baseName}-{env}-{region}`)
-- [ ] **9.4** `infra/modules/monitoring.bicep` — Log Analytics workspace + Application Insights workspace-based (desplegar primero)
-- [ ] **9.5** `infra/modules/storage.bicep` — Storage Account Standard LRS + blob containers `originals` y `dlq`
-- [ ] **9.6** `infra/modules/cosmos.bicep` — Account (free tier / fallback serverless) + DB `docproc` + containers `documents` + `jobs` (PK `/clientId`)
-- [ ] **9.7** `infra/modules/service-bus.bicep` — Namespace Basic + queue `ocr-extraction-jobs`
-- [ ] **9.8** `infra/modules/document-intelligence.bicep` — FormRecognizer F0
-- [ ] **9.9** `infra/modules/key-vault.bicep` — Standard, RBAC mode; secreto dummy `test-secret`
-- [ ] **9.10** `infra/modules/container-registry.bicep` — ACR Basic
-- [ ] **9.11** `infra/modules/container-apps-env.bicep` — CAE Consumption conectado a Log Analytics
-- [ ] **9.12** `infra/modules/container-app-api.bicep` — min=0, max=3, imagen `mcr.microsoft.com/azuredocs/containerapps-helloworld:latest`, UAMI asignada, secretRef a KV
-- [ ] **9.13** `infra/modules/identity.bicep` — 2 UAMIs (api, worker) + tabla declarativa con los 11 role assignments del spec
-- [ ] **9.14** `infra/scripts/bootstrap.sh` — setup one-time federated credential OIDC (App Registration ↔ GitHub)
-- [ ] **9.15** `infra/scripts/deploy.sh` — `az deployment sub create` para env dev
+- [x] **9.1** `infra/main.bicep` — targetScope=subscription, crea RG inline, orquesta módulos
+- [x] **9.2** `infra/parameters/dev.bicepparam` — valores dev (westeurope, enableFreeTier=true, básico para que `prod.bicepparam` solo cambie valores)
+- [x] **9.3** `infra/modules/naming.bicep` — outputs de todos los nombres según convención CAF (`{abbr}-{baseName}-{env}-{region}`)
+- [x] **9.4** `infra/modules/monitoring.bicep` — Log Analytics workspace + Application Insights workspace-based (desplegar primero)
+- [x] **9.5** `infra/modules/storage.bicep` — Storage Account Standard LRS + blob containers `originals` y `dlq`
+- [x] **9.6** `infra/modules/cosmos.bicep` — Account (free tier / fallback serverless) + DB `docproc` + containers `documents` + `jobs` (PK `/clientId`)
+- [x] **9.7** `infra/modules/service-bus.bicep` — Namespace Basic + queue `ocr-extraction-jobs`
+- [x] **9.8** `infra/modules/document-intelligence.bicep` — FormRecognizer F0
+- [x] **9.9** `infra/modules/key-vault.bicep` — Standard, RBAC mode; secreto dummy `test-secret`
+- [x] **9.10** `infra/modules/container-registry.bicep` — ACR Basic
+- [x] **9.11** `infra/modules/container-apps-env.bicep` — CAE Consumption conectado a Log Analytics
+- [x] **9.12** `infra/modules/container-app-api.bicep` — min=0, max=3, imagen `mcr.microsoft.com/azuredocs/containerapps-helloworld:latest`, UAMI asignada, secretRef a KV
+- [x] **9.13** `infra/modules/identity.bicep` — 2 UAMIs (api, worker) + tabla declarativa con los 11 role assignments del spec
+- [x] **9.14** `infra/scripts/bootstrap.sh` — setup one-time federated credential OIDC (App Registration ↔ GitHub)
+- [x] **9.15** `infra/scripts/deploy.sh` — `az deployment sub create` para env dev
 
 ---
 
 ## ÁREA 10 — Scripts raíz
 
-- [ ] **10.1** `scripts/bootstrap-local.sh` — checks (az, docker, uv), `az login`, `docker compose up -d azurite odoo odoo-db`, `uv sync`, `npm install`, `cp -n .env.example .env`
-- [ ] **10.2** `scripts/export_openapi.py` — arranca FastAPI app, exporta OpenAPI a `docs/api/openapi.json`
+- [x] **10.1** `scripts/bootstrap-local.sh` — checks (az, docker, uv), `az login`, `docker compose up -d azurite odoo odoo-db`, `uv sync`, `npm install`, `cp -n .env.example .env`
+- [x] **10.2** `scripts/export_openapi.py` — arranca FastAPI app, exporta OpenAPI a `docs/api/openapi.json`
 
 ---
 
 ## ÁREA 11 — GitHub Actions CI/CD
 
-- [ ] **11.1** `.github/workflows/ci-backend.yml` — trigger: PR + push main (paths: `backend/**`); pasos: checkout, uv (con cache), uv sync, ruff check, ruff format --check, mypy --strict, pytest unit, pytest integration (services: Azurite + Cosmos emulator vNext), export OpenAPI, upload artifact
-- [ ] **11.2** `.github/workflows/ci-frontend.yml` — trigger: PR + push main (paths: `frontend/**`); pasos: npm ci, typecheck, build
-- [ ] **11.3** `.github/workflows/ci-infra.yml` — trigger: PR (paths: `infra/**`); pasos: bicep lint, az deployment sub what-if
-- [ ] **11.4** `.github/workflows/cd-backend.yml` — trigger: push main; pasos: OIDC login, acr login, docker build + push ACR (tag sha + latest), az containerapp update; single-revision mode
-- [ ] **11.5** `.github/workflows/cd-infra.yml` — trigger: workflow_dispatch; az deployment sub create dev
-- [ ] **11.6** `.github/workflows/pr-checks.yml` — commitlint (Conventional Commits + scopes cerrados), openapi diff, branch naming (`feat/M{n}-*`)
+- [x] **11.1** `.github/workflows/ci-backend.yml` — trigger: PR + push main (paths: `backend/**`); pasos: checkout, uv (con cache), uv sync, ruff check, ruff format --check, mypy --strict, pytest unit, pytest integration (services: Azurite + Cosmos emulator vNext), export OpenAPI, upload artifact
+- [x] **11.2** `.github/workflows/ci-frontend.yml` — trigger: PR + push main (paths: `frontend/**`); pasos: npm ci, typecheck, build
+- [x] **11.3** `.github/workflows/ci-infra.yml` — trigger: PR (paths: `infra/**`); pasos: bicep lint, az deployment sub what-if
+- [x] **11.4** `.github/workflows/cd-backend.yml` — trigger: push main; pasos: OIDC login, acr login, docker build + push ACR (tag sha + latest), az containerapp update; single-revision mode
+- [x] **11.5** `.github/workflows/cd-infra.yml` — trigger: workflow_dispatch; az deployment sub create dev
+- [x] **11.6** `.github/workflows/pr-checks.yml` — commitlint (Conventional Commits + scopes cerrados), openapi diff, branch naming (`feat/M{n}-*`)
 
 ---
 
