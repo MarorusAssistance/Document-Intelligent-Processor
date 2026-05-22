@@ -132,12 +132,12 @@ Bloque E — Al final
 
 ## ÁREA 7 — Backend: Tests (mínimo 5)
 
-- [ ] **7.1** `tests/conftest.py` — fixtures: test client, fake repos, fake blob storage
-- [ ] **7.2** `tests/integration/api/test_health.py` — `GET /health` → 200
-- [ ] **7.3** `tests/integration/persistence/test_cosmos_smoke.py` — contra emulator: crear container, insertar, leer, borrar
-- [ ] **7.4** `tests/unit/domain/test_state_machine.py` — transiciones válidas e inválidas
-- [ ] **7.5** `tests/unit/domain/test_field_schemas.py` — carga schema canónico invoice sin errores
-- [ ] **7.6** `tests/unit/api/test_dto_mapping.py` — `Document → DocumentResponse`
+- [x] **7.1** `tests/conftest.py` — fixtures: test client, fake repos, fake blob storage
+- [x] **7.2** `tests/integration/api/test_health.py` — `GET /health` → 200
+- [x] **7.3** `tests/integration/persistence/test_cosmos_smoke.py` — contra emulator: crear container, insertar, leer, borrar
+- [x] **7.4** `tests/unit/domain/test_state_machine.py` — transiciones válidas e inválidas
+- [x] **7.5** `tests/unit/domain/test_field_schemas.py` — carga schema canónico invoice sin errores
+- [x] **7.6** `tests/unit/api/test_dto_mapping.py` — `Document → DocumentResponse`
 
 ---
 
