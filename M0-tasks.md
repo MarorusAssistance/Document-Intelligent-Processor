@@ -13,7 +13,7 @@
 | 1. Root / Repo setup | 6 | 6 |
 | 2. Backend: Scaffolding | 3 | 3 |
 | 3. Backend: Dominio | 7 | 7 |
-| 4. Backend: Application layer | 7 | 0 |
+| 4. Backend: Application layer | 7 | 7 |
 | 5. Backend: Infrastructure adapters | 10 | 0 |
 | 6. Backend: API layer | 19 | 0 |
 | 7. Backend: Tests | 6 | 0 |
@@ -22,7 +22,7 @@
 | 10. Scripts raíz | 2 | 0 |
 | 11. GitHub Actions CI/CD | 6 | 0 |
 | 12. ADRs | 9 | 0 |
-| **Total** | **99** | **16** |
+| **Total** | **99** | **23** |
 
 ---
 
@@ -81,13 +81,13 @@ Bloque E — Al final
 
 ## ÁREA 4 — Backend: Application layer
 
-- [ ] **4.1** `application/ports/documents_repository.py` — `Protocol` (get, list, save, delete)
-- [ ] **4.2** `application/ports/jobs_repository.py` — `Protocol`
-- [ ] **4.3** `application/ports/blob_storage.py` — `Protocol` (upload, download, delete, get_url)
-- [ ] **4.4** `application/ports/queue_publisher.py` — `Protocol` (publish)
-- [ ] **4.5** `application/ports/ocr_provider.py` — `Protocol` placeholder (M1)
-- [ ] **4.6** `application/ports/erp_adapter.py` — `Protocol` placeholder (M3)
-- [ ] **4.7** Use cases stub: `upload_document.py`, `apply_correction.py`, `approve_document.py`, `list_documents.py`, `get_document.py`, `enqueue_extraction.py`, `process_extraction_job.py`
+- [x] **4.1** `application/ports/documents_repository.py` — `Protocol` (get, list, save, delete)
+- [x] **4.2** `application/ports/jobs_repository.py` — `Protocol`
+- [x] **4.3** `application/ports/blob_storage.py` — `Protocol` (upload, download, delete, get_url)
+- [x] **4.4** `application/ports/queue_publisher.py` — `Protocol` (publish)
+- [x] **4.5** `application/ports/ocr_provider.py` — `Protocol` placeholder (M1)
+- [x] **4.6** `application/ports/erp_adapter.py` — `Protocol` placeholder (M3)
+- [x] **4.7** Use cases stub: `upload_document.py`, `apply_correction.py`, `approve_document.py`, `list_documents.py`, `get_document.py`, `enqueue_extraction.py`, `process_extraction_job.py`
 
 ---
 
