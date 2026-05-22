@@ -16,6 +16,12 @@ param location string = 'westeurope'
 @description('Enable Cosmos DB free tier (one per subscription)')
 param enableFreeTier bool = true
 
+@description('Set true after first CAE provision to avoid re-provisioning (westeurope AKS capacity)')
+param existingCae bool = false
+
+@description('Azure region for Container Apps resources (may differ from main location due to AKS capacity)')
+param caLocation string = 'westeurope'
+
 // ── Naming ────────────────────────────────────────────────────────────────────
 
 // Compute RG name inline — module outputs are not available at deployment start (BCP120)
@@ -142,9 +148,10 @@ module cae 'modules/container-apps-env.bicep' = {
   scope: rg
   params: {
     envName: naming.outputs.containerAppsEnvName
-    location: location
+    location: caLocation
     logAnalyticsWorkspaceId: monitoring.outputs.logAnalyticsWorkspaceId
     logAnalyticsSharedKey: monitoring.outputs.logAnalyticsSharedKey
+    existingCae: existingCae
   }
 }
 
@@ -155,7 +162,7 @@ module caApi 'modules/container-app-api.bicep' = {
   scope: rg
   params: {
     appName: naming.outputs.containerAppApiName
-    location: location
+    location: caLocation
     containerAppsEnvId: cae.outputs.containerAppsEnvId
     apiIdentityId: identity.outputs.apiIdentityId
     apiIdentityClientId: identity.outputs.apiIdentityClientId

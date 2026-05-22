@@ -53,8 +53,8 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' existing = {
 var storageBlobDataContributorRoleId = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
 var storageBlobDataReaderRoleId      = '2a2b9908-6ea1-4ae2-8e65-a410df84e7d1'
 var serviceBusDataSenderRoleId       = '69a216fc-b8fb-44d8-bc22-1f3c2cd27a39'
-var serviceBusDataReceiverRoleId     = '4f6d3b9f-027b-4f4c-9142-0e5a2a2247e0'
-var keyVaultSecretsUserRoleId        = '4633458b-17de-408a-b874-0445c86b69e0'
+var serviceBusDataReceiverRoleId     = '4f6d3b9b-027b-4f4c-9142-0e5a2a2247e0'
+var keyVaultSecretsUserRoleId        = '4633458b-17de-408a-b874-0445c86b69e6'
 var monitoringMetricsPublisherRoleId = '3913510d-42f4-4e42-8a64-420c390055eb'
 var cognitiveServicesUserRoleId      = 'a97b65f3-24c7-4388-baec-2e87135dc908'
 
