@@ -2,7 +2,7 @@
 
 **Milestone:** M0 — Cimientos
 **Spec:** [M0-spec.md](M0-spec.md)
-**Estado:** En progreso
+**Estado:** Implementación completa — pendiente verificación AC en Azure
 
 ---
 
@@ -21,8 +21,8 @@
 | 9. Infraestructura Bicep | 15 | 15 |
 | 10. Scripts raíz | 2 | 2 |
 | 11. GitHub Actions CI/CD | 6 | 6 |
-| 12. ADRs | 9 | 0 |
-| **Total** | **99** | **90** |
+| 12. ADRs | 9 | 9 |
+| **Total** | **99** | **99** |
 
 ---
 
@@ -197,15 +197,15 @@ Bloque E — Al final
 
 Los 9 ADRs obligatorios en `docs/architecture/adrs/`. Plantilla: Contexto / Decisión / Consecuencias / Alternativas consideradas.
 
-- [ ] **12.1** `0001-cosmos-db-over-table-storage.md`
-- [ ] **12.2** `0002-hexagonal-architecture-over-layered.md`
-- [ ] **12.3** `0003-entity-per-cell-for-line-items.md`
-- [ ] **12.4** `0004-value-mutable-with-ocr-original-snapshot.md`
-- [ ] **12.5** `0005-managed-identity-no-connection-strings.md`
-- [ ] **12.6** `0006-cursor-pagination-with-cosmos-continuation-token.md`
-- [ ] **12.7** `0007-idempotency-key-defined-impl-deferred.md`
-- [ ] **12.8** `0008-cosmos-cloud-for-dev-emulator-for-ci.md`
-- [ ] **12.9** `0009-rfc-7807-problem-json-errors.md`
+- [x] **12.1** `0001-cosmos-db-over-table-storage.md`
+- [x] **12.2** `0002-hexagonal-architecture-over-layered.md`
+- [x] **12.3** `0003-entity-per-cell-for-line-items.md`
+- [x] **12.4** `0004-value-mutable-with-ocr-original-snapshot.md`
+- [x] **12.5** `0005-managed-identity-no-connection-strings.md`
+- [x] **12.6** `0006-cursor-pagination-with-cosmos-continuation-token.md`
+- [x] **12.7** `0007-idempotency-key-defined-impl-deferred.md`
+- [x] **12.8** `0008-cosmos-cloud-for-dev-emulator-for-ci.md`
+- [x] **12.9** `0009-rfc-7807-problem-json-errors.md`
 
 ---
 
