@@ -14,7 +14,7 @@
 | 2. Backend: Scaffolding | 3 | 3 |
 | 3. Backend: Dominio | 7 | 7 |
 | 4. Backend: Application layer | 7 | 7 |
-| 5. Backend: Infrastructure adapters | 10 | 0 |
+| 5. Backend: Infrastructure adapters | 10 | 10 |
 | 6. Backend: API layer | 19 | 0 |
 | 7. Backend: Tests | 6 | 0 |
 | 8. Frontend: Scaffolding | 9 | 0 |
@@ -22,7 +22,7 @@
 | 10. Scripts raíz | 2 | 0 |
 | 11. GitHub Actions CI/CD | 6 | 0 |
 | 12. ADRs | 9 | 0 |
-| **Total** | **99** | **23** |
+| **Total** | **99** | **33** |
 
 ---
 
@@ -93,16 +93,16 @@ Bloque E — Al final
 
 ## ÁREA 5 — Backend: Infrastructure adapters
 
-- [ ] **5.1** `infrastructure/persistence/cosmos_client.py` — `DefaultAzureCredential`, config desde Settings
-- [ ] **5.2** `infrastructure/persistence/cosmos_documents_repository.py` — implementa `DocumentsRepository` Protocol, maneja `_etag` para concurrencia optimista, expone `ConcurrencyError`
-- [ ] **5.3** `infrastructure/persistence/cosmos_jobs_repository.py` — implementa `JobsRepository` Protocol
-- [ ] **5.4** `infrastructure/blob/azure_blob_storage.py` — implementa `BlobStorage` Protocol; rama Azurite si `STORAGE_USE_AZURITE=true`
-- [ ] **5.5** `infrastructure/queue/service_bus_publisher.py` — implementa `QueuePublisher` Protocol
-- [ ] **5.6** `infrastructure/ocr/azure_document_intelligence.py` — stub que implementa `OCRProvider` (M1 lo completa)
-- [ ] **5.7** `infrastructure/erp/odoo/` — carpeta vacía con `TODO.md` (M3)
-- [ ] **5.8** `infrastructure/erp/business_central/` — carpeta vacía con `TODO.md` (M5)
-- [ ] **5.9** `infrastructure/auth/entra_external_id.py` — valida Bearer JWT, extrae `clientId` del claim
-- [ ] **5.10** `infrastructure/observability/app_insights.py` — OpenTelemetry exporter a App Insights; logs como `customDimensions`
+- [x] **5.1** `infrastructure/persistence/cosmos_client.py` — `DefaultAzureCredential`, config desde Settings
+- [x] **5.2** `infrastructure/persistence/cosmos_documents_repository.py` — implementa `DocumentsRepository` Protocol, maneja `_etag` para concurrencia optimista, expone `ConcurrencyError`
+- [x] **5.3** `infrastructure/persistence/cosmos_jobs_repository.py` — implementa `JobsRepository` Protocol
+- [x] **5.4** `infrastructure/blob/azure_blob_storage.py` — implementa `BlobStorage` Protocol; rama Azurite si `STORAGE_USE_AZURITE=true`
+- [x] **5.5** `infrastructure/queue/service_bus_publisher.py` — implementa `QueuePublisher` Protocol
+- [x] **5.6** `infrastructure/ocr/azure_document_intelligence.py` — stub que implementa `OCRProvider` (M1 lo completa)
+- [x] **5.7** `infrastructure/erp/odoo/` — carpeta vacía con `TODO.md` (M3)
+- [x] **5.8** `infrastructure/erp/business_central/` — carpeta vacía con `TODO.md` (M5)
+- [x] **5.9** `infrastructure/auth/entra_external_id.py` — valida Bearer JWT, extrae `clientId` del claim
+- [x] **5.10** `infrastructure/observability/app_insights.py` — OpenTelemetry exporter a App Insights; logs como `customDimensions`
 
 ---
 
