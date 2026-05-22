@@ -1,0 +1,59 @@
+repos:
+
+  # ─── General file hygiene ─────────────────────────────────────────────────
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+      - id: check-merge-conflict
+      - id: detect-private-key
+
+  # ─── Python: ruff (lint + format) ────────────────────────────────────────
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.11
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  # ─── Python: mypy ─────────────────────────────────────────────────────────
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.15.0
+    hooks:
+      - id: mypy
+        args: [--strict]
+        files: ^backend/src/
+        additional_dependencies:
+          - pydantic>=2.0
+          - fastapi>=0.115
+
+  # ─── JS/TS/JSON/CSS/MD: prettier ─────────────────────────────────────────
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        types_or: [javascript, jsx, ts, tsx, json, css, markdown, yaml]
+        exclude: ^(backend/|infra/|docs/api/openapi\.json)
+
+  # ─── Markdown: markdownlint ───────────────────────────────────────────────
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.44.0
+    hooks:
+      - id: markdownlint
+        args: [--fix, --disable, MD013, MD033, MD041]
+
+  # ─── Bicep: format ────────────────────────────────────────────────────────
+  - repo: local
+    hooks:
+      - id: bicep-format
+        name: bicep format
+        language: system
+        entry: az bicep format --file
+        files: \.bicep$
+        pass_filenames: true
