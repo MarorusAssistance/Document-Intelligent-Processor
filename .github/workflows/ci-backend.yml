@@ -1,0 +1,98 @@
+name: CI — Backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - "scripts/export_openapi.py"
+  pull_request:
+    paths:
+      - "backend/**"
+      - "scripts/export_openapi.py"
+
+defaults:
+  run:
+    working-directory: backend
+
+jobs:
+  lint-and-test:
+    name: Lint, typecheck & test
+    runs-on: ubuntu-latest
+
+    services:
+      azurite:
+        image: mcr.microsoft.com/azure-storage/azurite:3.33.0
+        ports:
+          - "10000:10000"
+          - "10001:10001"
+          - "10002:10002"
+
+      cosmos:
+        image: mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:vnext-preview
+        ports:
+          - "8081:8081"
+          - "1234:1234"
+        options: >-
+          --health-cmd "curl -sf http://localhost:8081/ || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for Azurite
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:10000/devstoreaccount1 2>&1 | grep -qiE "InvalidQueryParameterValue|AuthenticationFailed|BlobServiceProperties"; then
+              echo "Azurite ready after ${i}s"
+              exit 0
+            fi
+            echo "Waiting for Azurite... (${i}/30)"
+            sleep 1
+          done
+          curl -v http://localhost:10000/devstoreaccount1 2>&1 || true
+          echo "Azurite did not become ready in 30s — proceeding anyway"
+        working-directory: ${{ github.workspace }}
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "backend/uv.lock"
+
+      - name: Install dependencies
+        run: uv sync --all-extras
+
+      - name: Lint (ruff)
+        run: uv run ruff check src/ tests/
+
+      - name: Format check (ruff)
+        run: uv run ruff format --check src/ tests/
+
+      - name: Type check (mypy --strict)
+        run: uv run mypy --strict src/
+
+      - name: Unit tests
+        run: uv run pytest tests/unit/ -v --cov=src --cov-report=xml
+
+      - name: Integration tests
+        env:
+          STORAGE_ACCOUNT_URL: "http://localhost:10000/devstoreaccount1"
+          STORAGE_USE_AZURITE: "true"
+          COSMOS_ENDPOINT: "http://localhost:8081"
+          ENVIRONMENT: "development"
+          AUTH_DEV_BYPASS: "true"
+        run: uv run pytest tests/integration/ -v
+
+      - name: Export OpenAPI schema
+        working-directory: ${{ github.workspace }}
+        run: uv run --directory backend python ../scripts/export_openapi.py
+
+      - name: Upload OpenAPI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: openapi-schema
+          path: docs/api/openapi.json
+          retention-days: 7

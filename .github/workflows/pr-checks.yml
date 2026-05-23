@@ -1,0 +1,81 @@
+name: PR Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  commitlint:
+    name: Conventional Commits
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Install commitlint
+        run: npm install --no-save @commitlint/cli @commitlint/config-conventional
+
+      - name: Lint commits
+        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+  branch-naming:
+    name: Branch naming convention
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch name
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          # Allow long-lived branches (main, dev) and feature branches following convention
+          LONG_LIVED='^(main|dev)$'
+          PATTERN='^(feat|fix|chore|docs|refactor|test|perf|ci|build)/M[0-9]+-[a-z0-9-]+$'
+          if [[ "${BRANCH}" =~ ${LONG_LIVED} ]]; then
+            echo "Long-lived branch OK: ${BRANCH}"
+          elif [[ "${BRANCH}" =~ ${PATTERN} ]]; then
+            echo "Branch name OK: ${BRANCH}"
+          else
+            echo "ERROR: Branch '${BRANCH}' does not follow naming convention."
+            echo "Expected: {type}/M{n}-{description} (e.g. feat/M1-upload-endpoint)"
+            exit 1
+          fi
+
+  openapi-diff:
+    name: OpenAPI schema diff
+    runs-on: ubuntu-latest
+    needs: []
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download OpenAPI artifact from base branch (if exists)
+        uses: dawidd6/action-download-artifact@v7
+        with:
+          name: openapi-schema
+          branch: ${{ github.event.pull_request.base.ref }}
+          path: /tmp/base-openapi/
+          if_no_artifact_found: ignore
+
+      - name: Download OpenAPI artifact from PR
+        uses: dawidd6/action-download-artifact@v7
+        with:
+          name: openapi-schema
+          workflow: ci-backend.yml
+          pr: ${{ github.event.pull_request.number }}
+          path: /tmp/pr-openapi/
+          if_no_artifact_found: ignore
+
+      - name: Diff OpenAPI schemas
+        run: |
+          BASE="/tmp/base-openapi/openapi.json"
+          PR="/tmp/pr-openapi/openapi.json"
+          if [ -f "${BASE}" ] && [ -f "${PR}" ]; then
+            echo "=== OpenAPI diff ==="
+            diff "${BASE}" "${PR}" || true
+          else
+            echo "One or both OpenAPI artifacts not found — skipping diff."
+          fi

@@ -1,0 +1,45 @@
+{
+  "extends": ["@commitlint/config-conventional"],
+  "rules": {
+    "type-enum": [
+      2,
+      "always",
+      ["feat", "fix", "chore", "docs", "refactor", "test", "perf", "ci", "build", "style"]
+    ],
+    "scope-enum": [
+      2,
+      "always",
+      [
+        "documents",
+        "corrections",
+        "jobs",
+        "extraction",
+        "erp",
+        "auth",
+        "cosmos",
+        "blob",
+        "service-bus",
+        "api",
+        "infra",
+        "ci",
+        "deps",
+        "frontend",
+        "docs",
+        "adr",
+        "domain",
+        "application",
+        "infrastructure",
+        "backend",
+        "repo",
+        "tests",
+        "config",
+        "monitoring",
+        "identity",
+        "naming",
+        "worker"
+      ]
+    ],
+    "scope-empty": [2, "never"],
+    "subject-case": [2, "never", ["start-case", "pascal-case", "upper-case"]]
+  }
+}
