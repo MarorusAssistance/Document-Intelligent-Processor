@@ -4,7 +4,7 @@
     "type-enum": [
       2,
       "always",
-      ["feat", "fix", "chore", "docs", "refactor", "test", "perf", "ci", "build"]
+      ["feat", "fix", "chore", "docs", "refactor", "test", "perf", "ci", "build", "style"]
     ],
     "scope-enum": [
       2,
