@@ -14,7 +14,7 @@ dependencies = [
     "azure-ai-documentintelligence>=1.0",
     "azure-identity>=1.18",
     "opentelemetry-sdk>=1.27",
-    "azure-monitor-opentelemetry-exporter>=1.0",
+    "azure-monitor-opentelemetry-exporter>=1.0.0b1",
     "python-ulid>=3.0",
 ]
 
