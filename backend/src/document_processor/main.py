@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from typing import AsyncIterator
 
 import structlog
 from fastapi import FastAPI
@@ -29,16 +29,16 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
     logger.info("startup", environment=settings.environment)
 
+    from azure.cosmos.aio import CosmosClient
+    from azure.identity.aio import DefaultAzureCredential
+
+    from document_processor.infrastructure.blob.azure_blob_storage import AzureBlobStorage
     from document_processor.infrastructure.persistence.cosmos_documents_repository import (
         CosmosDocumentsRepository,
     )
     from document_processor.infrastructure.persistence.cosmos_jobs_repository import (
         CosmosJobsRepository,
     )
-    from document_processor.infrastructure.blob.azure_blob_storage import AzureBlobStorage
-
-    from azure.cosmos.aio import CosmosClient
-    from azure.identity.aio import DefaultAzureCredential
 
     credential = DefaultAzureCredential()
     cosmos_client = CosmosClient(url=settings.cosmos_endpoint, credential=credential)

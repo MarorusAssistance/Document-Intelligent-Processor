@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from document_processor.application.ports.blob_storage import BlobStorage
 from document_processor.application.ports.documents_repository import DocumentsRepository
@@ -31,7 +31,7 @@ async def upload_document(
     queue_publisher: QueuePublisher,
 ) -> UploadDocumentResult:
     # TODO(M1): real blob upload, SHA-256, enqueue OCR job
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     document = Document(
         client_id=command.client_id,
         document_kind=command.document_kind,

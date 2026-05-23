@@ -62,7 +62,9 @@ async def get_document_endpoint(
             documents_repo=repo,
         )
     except DocumentNotFound:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Document not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Document not found"
+        ) from None
     return document_to_response(doc)
 
 
@@ -84,7 +86,9 @@ async def patch_document_status(
                 documents_repo=repo,
             )
         except DocumentNotFound:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Document not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Document not found"
+            ) from None
         except InvalidTransition as exc:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
         return document_to_response(updated)

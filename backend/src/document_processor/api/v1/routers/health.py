@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from fastapi import APIRouter
 
@@ -21,12 +21,12 @@ class VersionResponse(CamelCaseModel):
 
 @router.get("/health", response_model=HealthResponse)
 async def health_live() -> HealthResponse:
-    return HealthResponse(status="ok", timestamp=datetime.now(timezone.utc))
+    return HealthResponse(status="ok", timestamp=datetime.now(UTC))
 
 
 @router.get("/health/ready", response_model=HealthResponse)
 async def health_ready() -> HealthResponse:
-    return HealthResponse(status="ok", timestamp=datetime.now(timezone.utc))
+    return HealthResponse(status="ok", timestamp=datetime.now(UTC))
 
 
 @router.get("/api/v1/version", response_model=VersionResponse)

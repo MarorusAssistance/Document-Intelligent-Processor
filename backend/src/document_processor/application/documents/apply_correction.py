@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
 
-from document_processor.application.ports.documents_repository import DocumentsRepository
 from document_processor.application.documents.get_document import DocumentNotFound
+from document_processor.application.ports.documents_repository import DocumentsRepository
 from document_processor.domain.documents.models import Correction, ExtractedField
-from document_processor.domain.documents.value_objects import FieldKey, Money
+from document_processor.domain.documents.value_objects import Money
 
 
 @dataclass(frozen=True)

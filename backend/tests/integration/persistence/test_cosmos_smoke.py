@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Smoke test against the local Cosmos DB emulator.
 
 Requires the emulator running on https://localhost:8081.
@@ -7,7 +5,12 @@ Skip automatically when the endpoint is unreachable.
 Run explicitly with:  pytest -m cosmos_emulator
 """
 
+from __future__ import annotations
+
+import contextlib
 import os
+from collections.abc import AsyncGenerator
+from typing import Any
 
 import pytest
 
@@ -22,9 +25,9 @@ pytestmark = pytest.mark.cosmos_emulator
 
 
 @pytest.fixture
-async def cosmos_container():  # type: ignore[no-untyped-def]
+async def cosmos_container() -> AsyncGenerator[Any, None]:
     azure_cosmos = pytest.importorskip("azure.cosmos.aio")
-    CosmosClient = azure_cosmos.CosmosClient  # noqa: N806
+    CosmosClient = azure_cosmos.CosmosClient
 
     async with CosmosClient(COSMOS_ENDPOINT, credential=COSMOS_KEY) as client:
         try:
@@ -35,14 +38,12 @@ async def cosmos_container():  # type: ignore[no-untyped-def]
             )
             yield container
         finally:
-            try:
+            with contextlib.suppress(Exception):
                 await client.delete_database("docproc-test")
-            except Exception:
-                pass
 
 
 @pytest.mark.asyncio
-async def test_cosmos_crud(cosmos_container) -> None:  # type: ignore[no-untyped-def]
+async def test_cosmos_crud(cosmos_container: Any) -> None:  # noqa: ANN401
     item = {"id": "smoke-1", "clientId": "client_test", "value": "hello"}
 
     await cosmos_container.upsert_item(item)

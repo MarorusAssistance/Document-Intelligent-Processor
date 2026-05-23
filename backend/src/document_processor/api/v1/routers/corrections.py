@@ -8,7 +8,7 @@ from document_processor.api.v1.dto.corrections import (
     CreateCorrectionRequest,
     ExtractedFieldResponse,
 )
-from document_processor.api.v1.dto.mappers import correction_to_response, field_to_response
+from document_processor.api.v1.dto.mappers import correction_to_response
 from document_processor.api.v1.dto.pagination import PaginatedResponse, Pagination
 from document_processor.application.documents.apply_correction import (
     ApplyCorrectionCommand,
@@ -79,7 +79,9 @@ async def create_correction(
             documents_repo=repo,
         )
     except DocumentNotFound:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Document not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Document not found"
+        ) from None
     except NotImplementedError as exc:
         raise HTTPException(
             status_code=status.HTTP_501_NOT_IMPLEMENTED, detail=str(exc)

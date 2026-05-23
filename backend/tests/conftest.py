@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
-from typing import Any, AsyncIterator
+from collections.abc import AsyncIterator
+from datetime import UTC, datetime
+from typing import Any
 
 import pytest
 from httpx import ASGITransport, AsyncClient
@@ -9,7 +10,6 @@ from httpx import ASGITransport, AsyncClient
 from document_processor.config import Settings
 from document_processor.domain.documents.models import Document
 from document_processor.domain.jobs.models import Job
-
 
 # ── In-memory fakes ───────────────────────────────────────────────────────────
 
@@ -121,10 +121,11 @@ async def test_client(
     fake_blob_storage: FakeBlobStorage,
     dev_settings: Settings,
 ) -> AsyncIterator[AsyncClient]:
+    from collections.abc import AsyncIterator as _AI
     from contextlib import asynccontextmanager
-    from typing import AsyncIterator as _AI
 
     from fastapi import FastAPI
+    from fastapi.exceptions import HTTPException, RequestValidationError
 
     from document_processor.api.middleware.access_log import AccessLogMiddleware
     from document_processor.api.middleware.auth import AuthMiddleware
@@ -135,7 +136,6 @@ async def test_client(
         unhandled_exception_handler,
     )
     from document_processor.api.v1.routers import corrections, documents, health, jobs
-    from fastapi.exceptions import HTTPException, RequestValidationError
     from document_processor.logging_config import configure_logging
 
     configure_logging(log_level="WARNING", json_logs=False)
@@ -171,8 +171,8 @@ async def test_client(
 # ── Domain helpers ────────────────────────────────────────────────────────────
 
 
-def make_document(**overrides: Any) -> Document:
-    now = datetime.now(timezone.utc)
+def make_document(**overrides: Any) -> Document:  # noqa: ANN401
+    now = datetime.now(UTC)
     from document_processor.domain.documents.models import (
         DocumentKind,
         DocumentSource,

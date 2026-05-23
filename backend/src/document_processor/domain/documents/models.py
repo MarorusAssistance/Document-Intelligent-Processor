@@ -9,7 +9,6 @@ from ulid import ULID
 
 from document_processor.domain.documents.value_objects import BoundingBox, FieldKey, Money
 
-
 # ── Enums ──────────────────────────────────────────────────────────────────────
 
 

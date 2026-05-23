@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from decimal import Decimal
 
 import pytest
@@ -14,9 +14,9 @@ from document_processor.api.v1.dto.mappers import (
 from document_processor.domain.documents.models import (
     Correction,
     DataType,
+    Document,
     DocumentKind,
     DocumentSource,
-    Document,
     ExtractedField,
     FieldGroup,
     FieldLocation,
@@ -26,7 +26,7 @@ from document_processor.domain.documents.value_objects import BoundingBox, Field
 
 
 def _now() -> datetime:
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 def _make_document() -> Document:

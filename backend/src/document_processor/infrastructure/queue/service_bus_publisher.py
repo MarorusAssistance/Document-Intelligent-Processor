@@ -4,8 +4,8 @@ import json
 from typing import Any
 
 from azure.identity.aio import DefaultAzureCredential
-from azure.servicebus.aio import ServiceBusClient
 from azure.servicebus import ServiceBusMessage
+from azure.servicebus.aio import ServiceBusClient
 
 
 class ServiceBusQueuePublisher:
@@ -17,6 +17,5 @@ class ServiceBusQueuePublisher:
         async with ServiceBusClient(
             fully_qualified_namespace=self._namespace,
             credential=self._credential,
-        ) as client:
-            async with client.get_queue_sender(queue_name=queue) as sender:
-                await sender.send_messages(ServiceBusMessage(json.dumps(message)))
+        ) as client, client.get_queue_sender(queue_name=queue) as sender:
+            await sender.send_messages(ServiceBusMessage(json.dumps(message)))

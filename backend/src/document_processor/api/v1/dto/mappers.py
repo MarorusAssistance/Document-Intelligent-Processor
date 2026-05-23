@@ -1,10 +1,5 @@
 from __future__ import annotations
 
-from typing import Any
-
-from document_processor.domain.documents.models import Correction, Document, ExtractedField
-from document_processor.domain.documents.value_objects import Money
-from document_processor.domain.jobs.models import Job
 from document_processor.api.v1.dto.corrections import (
     BoundingBoxResponse,
     CorrectionResponse,
@@ -22,9 +17,12 @@ from document_processor.api.v1.dto.documents import (
     StatusHistoryEntryResponse,
 )
 from document_processor.api.v1.dto.jobs import JobListItem, JobResponse
+from document_processor.domain.documents.models import Correction, Document, ExtractedField
+from document_processor.domain.documents.value_objects import Money
+from document_processor.domain.jobs.models import Job
 
 
-def _value_to_wire(value: str | Money) -> Any:
+def _value_to_wire(value: str | Money) -> str | dict[str, str]:
     if isinstance(value, Money):
         return {"amount": str(value.amount), "currency": value.currency}
     return value

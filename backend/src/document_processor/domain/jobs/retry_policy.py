@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 # Delay in seconds after each failed attempt: 30s, 2m, 8m, 32m, 2h
 RETRY_DELAYS_SECONDS: list[int] = [30, 120, 480, 1920, 7200]
@@ -17,7 +17,7 @@ def compute_next_retry_at(attempt_number: int) -> datetime | None:
     if idx >= len(RETRY_DELAYS_SECONDS):
         return None
     delay = RETRY_DELAYS_SECONDS[idx]
-    return datetime.now(timezone.utc) + timedelta(seconds=delay)
+    return datetime.now(UTC) + timedelta(seconds=delay)
 
 
 def should_dead_letter(attempt_number: int, max_attempts: int) -> bool:

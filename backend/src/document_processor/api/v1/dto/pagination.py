@@ -1,10 +1,6 @@
 from __future__ import annotations
 
-from typing import Generic, TypeVar
-
 from document_processor.api.v1.dto._base import CamelCaseModel
-
-T = TypeVar("T")
 
 
 class Pagination(CamelCaseModel):
@@ -13,6 +9,6 @@ class Pagination(CamelCaseModel):
     has_more: bool
 
 
-class PaginatedResponse(CamelCaseModel, Generic[T]):
+class PaginatedResponse[T](CamelCaseModel):
     items: list[T]
     pagination: Pagination

@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from datetime import datetime
 from enum import StrEnum
-from typing import Annotated, Literal, Union
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, Field
 from ulid import ULID
-
 
 # ── Enums ──────────────────────────────────────────────────────────────────────
 
@@ -46,7 +45,7 @@ class ClassifyDocumentPayload(BaseModel):
 
 
 JobPayload = Annotated[
-    Union[OcrExtractPayload, PushToErpPayload, ClassifyDocumentPayload],
+    OcrExtractPayload | PushToErpPayload | ClassifyDocumentPayload,
     Field(discriminator="kind"),
 ]
 
@@ -71,7 +70,7 @@ class ClassifyDocumentResult(BaseModel):
 
 
 JobResult = Annotated[
-    Union[OcrExtractResult, PushToErpResult, ClassifyDocumentResult],
+    OcrExtractResult | PushToErpResult | ClassifyDocumentResult,
     Field(discriminator="kind"),
 ]
 

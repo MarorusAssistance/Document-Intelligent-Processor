@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
-from document_processor.application.ports.documents_repository import DocumentsRepository
 from document_processor.application.documents.get_document import DocumentNotFound
+from document_processor.application.ports.documents_repository import DocumentsRepository
 from document_processor.domain.documents.models import Document, DocumentStatus, StatusHistoryEntry
 from document_processor.domain.documents.state_machine import assert_valid_transition
 
@@ -26,7 +26,7 @@ async def approve_document(
 
     assert_valid_transition(document.status, DocumentStatus.approved)
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     updated = document.model_copy(
         update={
             "status": DocumentStatus.approved,

@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from datetime import datetime
 from enum import StrEnum
-from typing import Any
+
+from pydantic import Field
 
 from document_processor.api.v1.dto._base import CamelCaseModel
 
@@ -62,7 +63,7 @@ class DocumentResponse(CamelCaseModel):
     client_id: str
     document_kind: str
     status: str
-    status_history: list[StatusHistoryEntryResponse] = []
+    status_history: list[StatusHistoryEntryResponse] = Field(default_factory=list)
     archived_at: datetime | None = None
     source: DocumentSourceResponse
     extraction: ExtractionInfoResponse | None = None

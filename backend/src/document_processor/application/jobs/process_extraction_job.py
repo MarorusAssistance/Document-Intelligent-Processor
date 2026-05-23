@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from document_processor.application.ports.documents_repository import DocumentsRepository
 from document_processor.application.ports.jobs_repository import JobsRepository
 from document_processor.application.ports.ocr_provider import OCRProvider
-from document_processor.application.ports.documents_repository import DocumentsRepository
 from document_processor.domain.jobs.models import Job
 
 

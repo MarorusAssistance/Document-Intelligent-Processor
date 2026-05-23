@@ -4,9 +4,9 @@ from typing import Annotated
 
 from fastapi import Depends, Header, HTTPException, Request, status
 
+from document_processor.application.ports.blob_storage import BlobStorage
 from document_processor.application.ports.documents_repository import DocumentsRepository
 from document_processor.application.ports.jobs_repository import JobsRepository
-from document_processor.application.ports.blob_storage import BlobStorage
 from document_processor.infrastructure.auth.entra_external_id import (
     AuthError,
     extract_bearer_token,

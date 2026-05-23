@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from document_processor.application.ports.jobs_repository import JobsRepository
 from document_processor.application.ports.queue_publisher import QueuePublisher
@@ -27,7 +27,7 @@ async def enqueue_extraction(
     jobs_repo: JobsRepository,
     queue_publisher: QueuePublisher,
 ) -> EnqueueExtractionResult:
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     job = Job(
         client_id=command.client_id,
         document_id=command.document_id,
@@ -40,5 +40,7 @@ async def enqueue_extraction(
         created_at=now,
     )
     await jobs_repo.save(job)
-    await queue_publisher.publish("ocr-extraction-jobs", {"jobId": job.id, "clientId": job.client_id})
+    await queue_publisher.publish(
+        "ocr-extraction-jobs", {"jobId": job.id, "clientId": job.client_id}
+    )
     return EnqueueExtractionResult(job=job)

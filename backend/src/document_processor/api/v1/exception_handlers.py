@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import contextlib
+
 from fastapi import Request, status
 from fastapi.responses import JSONResponse
 
@@ -8,10 +10,8 @@ from document_processor.api.v1.dto.errors import ProblemDetails
 
 async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
     trace_id: str | None = None
-    try:
+    with contextlib.suppress(AttributeError):
         trace_id = request.state.trace_id
-    except AttributeError:
-        pass
 
     problem = ProblemDetails(
         type="about:blank",
@@ -36,10 +36,8 @@ async def http_exception_handler(request: Request, exc: Exception) -> JSONRespon
         return await unhandled_exception_handler(request, exc)
 
     trace_id: str | None = None
-    try:
+    with contextlib.suppress(AttributeError):
         trace_id = request.state.trace_id
-    except AttributeError:
-        pass
 
     problem = ProblemDetails(
         type="about:blank",
@@ -66,10 +64,8 @@ async def request_validation_handler(request: Request, exc: Exception) -> JSONRe
         return await unhandled_exception_handler(request, exc)
 
     trace_id: str | None = None
-    try:
+    with contextlib.suppress(AttributeError):
         trace_id = request.state.trace_id
-    except AttributeError:
-        pass
 
     errors = [
         FieldError(

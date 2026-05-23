@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import contextlib
 from typing import Any
 
 from azure.cosmos.aio import ContainerProxy
@@ -95,8 +96,6 @@ class CosmosDocumentsRepository:
             self._etags[document.id] = str(new_etag)
 
     async def delete(self, client_id: str, document_id: str) -> None:
-        try:
+        with contextlib.suppress(CosmosResourceNotFoundError):
             await self._container.delete_item(item=document_id, partition_key=client_id)
-        except CosmosResourceNotFoundError:
-            pass
         self._etags.pop(document_id, None)
