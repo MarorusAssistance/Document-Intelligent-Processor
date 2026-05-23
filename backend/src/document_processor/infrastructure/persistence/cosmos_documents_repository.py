@@ -70,9 +70,7 @@ class CosmosDocumentsRepository:
             pass
 
         encoded = (
-            base64.b64encode(next_cosmos_cursor.encode()).decode()
-            if next_cosmos_cursor
-            else None
+            base64.b64encode(next_cosmos_cursor.encode()).decode() if next_cosmos_cursor else None
         )
         return items, encoded
 

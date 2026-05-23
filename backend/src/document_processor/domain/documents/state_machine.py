@@ -6,11 +6,13 @@ VALID_TRANSITIONS: dict[DocumentStatus, frozenset[DocumentStatus]] = {
     DocumentStatus.uploaded: frozenset({DocumentStatus.processing, DocumentStatus.failed}),
     DocumentStatus.processing: frozenset({DocumentStatus.extracted, DocumentStatus.failed}),
     DocumentStatus.extracted: frozenset({DocumentStatus.pending_review, DocumentStatus.failed}),
-    DocumentStatus.pending_review: frozenset({
-        DocumentStatus.approved,
-        DocumentStatus.rejected,
-        DocumentStatus.failed,
-    }),
+    DocumentStatus.pending_review: frozenset(
+        {
+            DocumentStatus.approved,
+            DocumentStatus.rejected,
+            DocumentStatus.failed,
+        }
+    ),
     DocumentStatus.approved: frozenset({DocumentStatus.pushing, DocumentStatus.failed}),
     DocumentStatus.pushing: frozenset({DocumentStatus.pushed, DocumentStatus.failed}),
     DocumentStatus.pushed: frozenset(),

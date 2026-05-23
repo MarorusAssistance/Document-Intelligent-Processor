@@ -83,9 +83,7 @@ async def create_correction(
             status_code=status.HTTP_404_NOT_FOUND, detail="Document not found"
         ) from None
     except NotImplementedError as exc:
-        raise HTTPException(
-            status_code=status.HTTP_501_NOT_IMPLEMENTED, detail=str(exc)
-        ) from exc
+        raise HTTPException(status_code=status.HTTP_501_NOT_IMPLEMENTED, detail=str(exc)) from exc
     return correction_to_response(result.correction)
 
 

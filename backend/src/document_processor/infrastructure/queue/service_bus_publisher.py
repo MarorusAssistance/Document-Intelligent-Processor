@@ -14,8 +14,11 @@ class ServiceBusQueuePublisher:
         self._credential = DefaultAzureCredential()
 
     async def publish(self, queue: str, message: dict[str, Any]) -> None:
-        async with ServiceBusClient(
-            fully_qualified_namespace=self._namespace,
-            credential=self._credential,
-        ) as client, client.get_queue_sender(queue_name=queue) as sender:
+        async with (
+            ServiceBusClient(
+                fully_qualified_namespace=self._namespace,
+                credential=self._credential,
+            ) as client,
+            client.get_queue_sender(queue_name=queue) as sender,
+        ):
             await sender.send_messages(ServiceBusMessage(json.dumps(message)))
