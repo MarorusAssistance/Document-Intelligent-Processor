@@ -22,16 +22,16 @@ jobs:
 
     services:
       azurite:
-        image: mcr.microsoft.com/azure-storage/azurite:latest
+        image: mcr.microsoft.com/azure-storage/azurite:3.33.0
         ports:
           - "10000:10000"
           - "10001:10001"
           - "10002:10002"
         options: >-
-          --health-cmd "nc -z localhost 10000"
+          --health-cmd "wget -qO- http://127.0.0.1:10000/devstoreaccount1 2>&1 | grep -q 'InvalidQueryParameterValue\|AuthenticationFailed' && exit 0 || exit 1"
           --health-interval 5s
-          --health-timeout 3s
-          --health-retries 10
+          --health-timeout 5s
+          --health-retries 15
 
       cosmos:
         image: mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:vnext-preview

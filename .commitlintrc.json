@@ -25,7 +25,18 @@
         "deps",
         "frontend",
         "docs",
-        "adr"
+        "adr",
+        "domain",
+        "application",
+        "infrastructure",
+        "backend",
+        "repo",
+        "tests",
+        "config",
+        "monitoring",
+        "identity",
+        "naming",
+        "worker"
       ]
     ],
     "scope-empty": [2, "never"],

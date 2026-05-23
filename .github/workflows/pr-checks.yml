@@ -31,14 +31,18 @@ jobs:
       - name: Check branch name
         run: |
           BRANCH="${{ github.head_ref }}"
-          # Allow: feat/M{n}-{description}, fix/M{n}-..., chore/M{n}-..., etc.
+          # Allow long-lived branches (main, dev) and feature branches following convention
+          LONG_LIVED='^(main|dev)$'
           PATTERN='^(feat|fix|chore|docs|refactor|test|perf|ci|build)/M[0-9]+-[a-z0-9-]+$'
-          if [[ ! "${BRANCH}" =~ ${PATTERN} ]]; then
+          if [[ "${BRANCH}" =~ ${LONG_LIVED} ]]; then
+            echo "Long-lived branch OK: ${BRANCH}"
+          elif [[ "${BRANCH}" =~ ${PATTERN} ]]; then
+            echo "Branch name OK: ${BRANCH}"
+          else
             echo "ERROR: Branch '${BRANCH}' does not follow naming convention."
             echo "Expected: {type}/M{n}-{description} (e.g. feat/M1-upload-endpoint)"
             exit 1
           fi
-          echo "Branch name OK: ${BRANCH}"
 
   openapi-diff:
     name: OpenAPI schema diff
@@ -60,7 +64,8 @@ jobs:
         uses: dawidd6/action-download-artifact@v7
         with:
           name: openapi-schema
-          run_id: ${{ github.event.pull_request.head.sha }}
+          workflow: ci-backend.yml
+          pr: ${{ github.event.pull_request.number }}
           path: /tmp/pr-openapi/
           if_no_artifact_found: ignore
 
