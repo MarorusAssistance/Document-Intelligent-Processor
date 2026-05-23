@@ -8,6 +8,7 @@ dependencies = [
     "pydantic-settings>=2.4",
     "structlog>=24.4",
     "azure-cosmos>=4.7",
+    "aiohttp>=3.10",
     "azure-storage-blob>=12.23",
     "azure-servicebus>=7.12",
     "azure-keyvault-secrets>=4.8",
