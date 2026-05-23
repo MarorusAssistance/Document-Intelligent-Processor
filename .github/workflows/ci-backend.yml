@@ -27,11 +27,6 @@ jobs:
           - "10000:10000"
           - "10001:10001"
           - "10002:10002"
-        options: >-
-          --health-cmd "wget -qO- http://127.0.0.1:10000/devstoreaccount1 2>&1 | grep -q 'InvalidQueryParameterValue\|AuthenticationFailed' && exit 0 || exit 1"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 15
 
       cosmos:
         image: mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:vnext-preview
@@ -46,6 +41,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Wait for Azurite
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:10000/devstoreaccount1 2>&1 | grep -qiE "InvalidQueryParameterValue|AuthenticationFailed|BlobServiceProperties"; then
+              echo "Azurite ready after ${i}s"
+              exit 0
+            fi
+            echo "Waiting for Azurite... (${i}/30)"
+            sleep 1
+          done
+          curl -v http://localhost:10000/devstoreaccount1 2>&1 || true
+          echo "Azurite did not become ready in 30s — proceeding anyway"
+        working-directory: ${{ github.workspace }}
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
