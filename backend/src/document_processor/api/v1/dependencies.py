@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Annotated
+from typing import Annotated, cast
 
 from fastapi import Depends, Header, HTTPException, Request, status
 
@@ -33,7 +33,7 @@ def get_current_client_id(
     settings = request.app.state.settings
 
     if settings.auth_dev_bypass and settings.is_development:
-        return settings.auth_dev_client_id
+        return cast(str, settings.auth_dev_client_id)
 
     if not authorization:
         raise HTTPException(

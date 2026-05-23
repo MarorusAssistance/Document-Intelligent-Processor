@@ -53,7 +53,7 @@ class CosmosJobsRepository:
 
         try:
             page = await pages.__anext__()
-            async for raw in page:  # type: ignore[attr-defined]
+            async for raw in page:
                 item = dict(raw)
                 if etag := item.get("_etag"):
                     self._etags[item["id"]] = str(etag)
